@@ -27,18 +27,6 @@ def reliability_diagrams(predictions, truths, confidences, bin_size=0.1, n_boot=
         boot_strap_outcomes = boot_strap_outcomes.astype(np.int32)
 
         # Compute error frequency in each bin
-        '''
-        for upper_bound in upper_bounds:
-            conf_thresh_upper = upper_bound
-            conf_thresh_lower = upper_bound - bin_size
-
-            filtered_tuples = [x for x in zip(boot_strap_outcomes, boot_strap_confs) if x[1] > conf_thresh_lower and x[1] <= conf_thresh_upper]
-            correct = len([x for x in filtered_tuples if x[0] == 1])
-            acc = float(correct) / len(filtered_tuples) if len(filtered_tuples) > 0 else 0
-
-            upper_bound_to_bootstrap_est[upper_bound].append(acc)
-        '''
-
         binned_b_confs = np.digitize(boot_strap_confs, upper_bounds, right=True)
         uni = np.unique(binned_b_confs)
         for i, upper_bound in enumerate(upper_bounds):
